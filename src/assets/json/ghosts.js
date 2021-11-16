@@ -10,13 +10,15 @@
 //const PHASMOPHOBIA_EVIDENCE_VERSION = '0.4.0'; // Nightmare update on October 25th
 
 // Evidence types
-const EMF_LEVEL_5 = 'EMF Level 5';
-const FINGERPRINTS = 'Fingerprints';
-const FREEZING_TEMPERATURES = 'Freezing temperatures';
-const GHOST_ORB = 'Ghost orb';
-const GHOST_WRITING = 'Ghost writing';
-const SPIRIT_BOX = 'Spirit box';
-const DOTS_PROJECTOR = 'D.O.T.S projection';
+export const EVIDENCE = {
+    EMF_LEVEL_5: 'EMF Level 5',
+    FINGERPRINTS: 'Fingerprints',
+    FREEZING_TEMPERATURES: 'Freezing temperatures',
+    GHOST_ORB: 'Ghost orb',
+    GHOST_WRITING: 'Ghost writing',
+    SPIRIT_BOX: 'Spirit box',
+    DOTS_PROJECTOR: 'D.O.T.S projection',
+}
 
 /**
  * Unique behavior
@@ -62,100 +64,101 @@ const HINT_THROWS_MULTIPLE_OBJECTS = 'Throws multiple objects at once';
 
 
 //TODO look into using an API to get the ghosts from the Wiki?
+
 export const GHOSTS = [
     {
         'name': 'Banshee',
-        'evidence': [DOTS_PROJECTOR, GHOST_ORB, FINGERPRINTS],
+        'evidence': [EVIDENCE.DOTS_PROJECTOR, EVIDENCE.GHOST_ORB, EVIDENCE.FINGERPRINTS],
         'hints': [HINT_SAME_HUNT_TARGET, HINT_EARLY_HUNT]
     },
     {
         'name': 'Demon',
-        'evidence': [GHOST_WRITING, FINGERPRINTS, FREEZING_TEMPERATURES],
+        'evidence': [EVIDENCE.GHOST_WRITING, EVIDENCE.FINGERPRINTS, EVIDENCE.FREEZING_TEMPERATURES],
         'unique': [UNIQUE_OUIJA_SANITY_DROP],
         'hints': [HINT_HUNT_70_SANITY]
     },
     {
         'name': 'Goryo',
-        'evidence': [DOTS_PROJECTOR, EMF_LEVEL_5, FINGERPRINTS],
+        'evidence': [EVIDENCE.DOTS_PROJECTOR, EVIDENCE.EMF_LEVEL_5, EVIDENCE.FINGERPRINTS],
         'unique': [UNIQUE_ONLY_VIDEO_DOTS]
     },
     {
         'name': 'Hantu',
-        'evidence': [GHOST_ORB, FINGERPRINTS, FREEZING_TEMPERATURES]
+        'evidence': [EVIDENCE.GHOST_ORB, EVIDENCE.FINGERPRINTS, EVIDENCE.FREEZING_TEMPERATURES]
     },
     {
         'name': 'Jinn',
-        'evidence': [EMF_LEVEL_5, FINGERPRINTS, FREEZING_TEMPERATURES]
+        'evidence': [EVIDENCE.EMF_LEVEL_5, EVIDENCE.FINGERPRINTS, EVIDENCE.FREEZING_TEMPERATURES]
     },
     {
         'name': 'Mare',
-        'evidence': [GHOST_WRITING, GHOST_ORB, SPIRIT_BOX],
+        'evidence': [EVIDENCE.GHOST_WRITING, EVIDENCE.GHOST_ORB, EVIDENCE.SPIRIT_BOX],
         'hints': [HINT_HUNT_EARLY_DARK]
     },
     {
         'name': 'Myling',
-        'evidence': [GHOST_WRITING, EMF_LEVEL_5, FINGERPRINTS],
+        'evidence': [EVIDENCE.GHOST_WRITING, EVIDENCE.EMF_LEVEL_5, EVIDENCE.FINGERPRINTS],
         'hints': [HINT_PARANORMAL_SOUND]
     },
     {
         'name': 'Obake',
-        'evidence': [EMF_LEVEL_5, GHOST_ORB, FINGERPRINTS],
+        'evidence': [EVIDENCE.EMF_LEVEL_5, EVIDENCE.GHOST_ORB, EVIDENCE.FINGERPRINTS],
         'unique': [UNIQUE_6_FINGERS]
     },
     {
         'name': 'Oni',
-        'evidence': [DOTS_PROJECTOR, EMF_LEVEL_5, FREEZING_TEMPERATURES]
+        'evidence': [EVIDENCE.DOTS_PROJECTOR, EVIDENCE.EMF_LEVEL_5, EVIDENCE.FREEZING_TEMPERATURES]
     },
     {
         'name': 'Onryo',
-        'evidence': [GHOST_ORB, FREEZING_TEMPERATURES, SPIRIT_BOX]
+        'evidence': [EVIDENCE.GHOST_ORB, EVIDENCE.FREEZING_TEMPERATURES, EVIDENCE.SPIRIT_BOX]
     },
     {
         'name': 'Phantom',
-        'evidence': [DOTS_PROJECTOR, FINGERPRINTS, SPIRIT_BOX],
+        'evidence': [EVIDENCE.DOTS_PROJECTOR, EVIDENCE.FINGERPRINTS, EVIDENCE.SPIRIT_BOX],
         'unique': [UNIQUE_DISSAPEAR_ON_PHOTO]
     },
     {
         'name': 'Poltergeist',
-        'evidence': [GHOST_WRITING, FINGERPRINTS, SPIRIT_BOX],
+        'evidence': [EVIDENCE.GHOST_WRITING, EVIDENCE.FINGERPRINTS, EVIDENCE.SPIRIT_BOX],
         'hints': [HINT_THROWS_MULTIPLE_OBJECTS]
     },
     {
         'name': 'Raiju',
-        'evidence': [DOTS_PROJECTOR, EMF_LEVEL_5, GHOST_ORB],
+        'evidence': [EVIDENCE.DOTS_PROJECTOR, EVIDENCE.EMF_LEVEL_5, EVIDENCE.GHOST_ORB],
         'hints': [HINT_ELECTRONICS_FAST_MOVEMENT]
     },
     {
         'name': 'Revenant',
-        'evidence': [GHOST_WRITING, GHOST_ORB, FREEZING_TEMPERATURES],
+        'evidence': [EVIDENCE.GHOST_WRITING, EVIDENCE.GHOST_ORB, EVIDENCE.FREEZING_TEMPERATURES],
         'hints': [HINT_FAST_TARGET_HUNT]
     },
     {
         'name': 'Shade',
-        'evidence': [GHOST_WRITING, EMF_LEVEL_5, FREEZING_TEMPERATURES],
+        'evidence': [EVIDENCE.GHOST_WRITING, EVIDENCE.EMF_LEVEL_5, EVIDENCE.FREEZING_TEMPERATURES],
         'hints': [HINT_SHY_GHOST]
     },
     {
         'name': 'Spirit',
-        'evidence': [GHOST_WRITING, EMF_LEVEL_5, SPIRIT_BOX],
+        'evidence': [EVIDENCE.GHOST_WRITING, EVIDENCE.EMF_LEVEL_5, EVIDENCE.SPIRIT_BOX],
         'hints': [HINT_SMUDGE_HUNT_COOLDOWN]
     },
     {
         'name': 'The Twins',
-        'evidence': [EMF_LEVEL_5, FREEZING_TEMPERATURES, SPIRIT_BOX],
+        'evidence': [EVIDENCE.EMF_LEVEL_5, EVIDENCE.FREEZING_TEMPERATURES, EVIDENCE.SPIRIT_BOX],
         'hints': [HINT_SIMULTANEUS_ACTIVITY]
     },
     {
         'name': 'Wraith',
-        'evidence': [DOTS_PROJECTOR, EMF_LEVEL_5, SPIRIT_BOX],
+        'evidence': [EVIDENCE.DOTS_PROJECTOR, EVIDENCE.EMF_LEVEL_5, EVIDENCE.SPIRIT_BOX],
         'unique': [UNIQUE_NO_FOOTPRINTS]
     },
     {
         'name': 'Yokai',
-        'evidence': [DOTS_PROJECTOR, GHOST_ORB, SPIRIT_BOX]
+        'evidence': [EVIDENCE.DOTS_PROJECTOR, EVIDENCE.GHOST_ORB, EVIDENCE.SPIRIT_BOX]
     },
     {
         'name': 'Yurei',
-        'evidence': [DOTS_PROJECTOR, GHOST_ORB, FREEZING_TEMPERATURES]
+        'evidence': [EVIDENCE.DOTS_PROJECTOR, EVIDENCE.GHOST_ORB, EVIDENCE.FREEZING_TEMPERATURES]
     },
 ]
