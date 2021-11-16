@@ -4,6 +4,9 @@
   width: 100%;
   margin: 0 auto;
 }
+.ghost-grid .ghost-name {
+  font-weight: bold;
+}
 
 @media screen and (max-width: 600px) {
   .ghost-grid {
