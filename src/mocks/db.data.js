@@ -1,13 +1,15 @@
 /**
  * Version of Phasmophobia evidence and hints are based on
- * NOTE: 
- *  Minor patches that had no ghost changes, or were just to fix a bug in ghost behaviour, are ignored.
- *  Only updates that truly change the set-out ghost behaviour will trigger a version update. 
+*/
+//const PHASMOPHOBIA_EVIDENCE_VERSION = '0.4.0'; // Nightmare update on October 25th
+/*
+ * NOTE:
+ *  Minor patches with no ghost changes, or were just to fix a bug in ghost behaviour, are ignored.
+ *  Only updates that truly change the set-out ghost behaviour will trigger a version update.
  *  For example: a ghost is added in version 5 that has a new evidence type "draws animals" and for some reason it doesn't actually work,
  *  they patch it, and the game is now up to version 5.1. This file would still keep its evidence version as 5, as that's where the new evidence was
  *  introduced.
 */
-//const PHASMOPHOBIA_EVIDENCE_VERSION = '0.4.0'; // Nightmare update on October 25th
 
 // Evidence types
 export const EVIDENCE = {
@@ -161,4 +163,4 @@ export const GHOSTS = [
         'name': 'Yurei',
         'evidence': [EVIDENCE.DOTS_PROJECTOR, EVIDENCE.GHOST_ORB, EVIDENCE.FREEZING_TEMPERATURES]
     },
-]
+];
