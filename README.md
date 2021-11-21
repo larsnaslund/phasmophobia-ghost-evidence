@@ -1,6 +1,14 @@
-# Getting Started with Create React App
+# Libraries used
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- [React Router](https://github.com/remix-run/react-router)
+- [Mock Service Worker (msw)](https://github.com/mswjs/msw)
+- [React Bootstrap](https://github.com/react-bootstrap/react-bootstrap)
+
+# Useful information
+
+- There's no real API server being called. The calls are intercepted by the service worker, returning some JSON which can be found inside `mocks/db.data.js`
+- `public/mockServiceWorker.js` created by running `npx msw init public`
+- Project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 

@@ -1,23 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Form } from 'react-bootstrap'
-import { EVIDENCE } from '../assets/json/ghosts'
+import { Alert } from 'react-bootstrap';
 
 //TODO REWRITE ONCE FUNCTIONAL
 export default function EvidenceSelector() {
 
+    const [error, setError] = useState(null);
     const [evidence, setEvidence] = useState([])
     const [isLoaded, setIsLoaded] = useState(false);
 
-    useEffect(() => {
-        let tempEvidence = [];
 
-        Object.entries(EVIDENCE).map(([key, value]) =>
-            // Checkbox state: 0 = unchecked, 1 = checked, 2 = strike-through
-            tempEvidence.push({ id: key, label: value, state: 0 })
-        )
-        setIsLoaded(true);
-        return setEvidence(tempEvidence);
-    }, [])
+    useEffect(() => {
+        fetch('api/ghost-evidence')
+            .then((res) => res.json())
+            .then((result) => {
+                let tempEvidence = [];
+                // Checkbox state: 0 = unchecked, 1 = checked, 2 = strike-through
+                Object.entries(result).map(([key, value]) =>
+                    tempEvidence.push({ id: key, label: value, state: 0 })
+                )
+                setIsLoaded(true);
+                return setEvidence(tempEvidence);
+            },
+                (error) => {
+                    setIsLoaded(false);
+                    setError(error);
+                })
+    }, []);
 
 
     const onChangeCheckbox = (id) => {
@@ -34,6 +43,7 @@ export default function EvidenceSelector() {
     return (
         <Card>
             <Card.Header>Available evidence</Card.Header>
+            {error && <Alert variant="danger">{error.message}</Alert>}
             {isLoaded && evidence.map(
                 (entry) => (
                     <Form.Check type="checkbox" id={entry.id}>
