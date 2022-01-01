@@ -1,15 +1,13 @@
 /**
  * Version of Phasmophobia evidence and hints are based on
-*/
-//const PHASMOPHOBIA_EVIDENCE_VERSION = '0.4.0'; // Nightmare update on October 25th
-/*
  * NOTE:
- *  Minor patches with no ghost changes, or were just to fix a bug in ghost behaviour, are ignored.
- *  Only updates that truly change the set-out ghost behaviour will trigger a version update.
- *  For example: a ghost is added in version 5 that has a new evidence type "draws animals" and for some reason it doesn't actually work,
- *  they patch it, and the game is now up to version 5.1. This file would still keep its evidence version as 5, as that's where the new evidence was
- *  introduced.
+ *  Minor patches and bug fixes that don't alter the "planned" ghost behavior are ignored. 
+ *  Only updates that change or introduce ghost behaviour will trigger a version update.
+ *  For example if a new ghost is added at version 5, but there was a bug with the 
+ *  ghost behavior requiring a patch, taking it to 5.1, this file will stay at version 5,
+ *  as that's where the ghost was first introduced with its planned bevaviour.
 */
+const PHASMOPHOBIA_EVIDENCE_VERSION = '0.5.0'; // Cursed Possessions update, December 10th 2021
 
 // Evidence types
 export const EVIDENCE = {
@@ -45,7 +43,7 @@ const UNIQUE_OUIJA_SANITY_DROP = 'No sanity drop on successful Ouija';
 // Always target the same player during hunts until they're killed. If that player is outside, it defaults to normal ghost hunt behaviour
 const HINT_SAME_HUNT_TARGET = 'Targets same player during hunts';
 const HINT_HUNT_EARLY_DARK = 'Hunts earlier in darkness';
-// This isn't truly unique as there are other ghosts that can hunt at that point too, depending on the circumstances
+// This isn't truly unique as there are other ghosts that can hunt at that point too, but depending on the gathered evidence so far, it could be useful
 const HINT_HUNT_70_SANITY = 'Hunts from 70% sanity';
 // Can hunt at any sanity level
 const HINT_EARLY_HUNT = 'Can hunt at any sanity';
@@ -63,7 +61,7 @@ const HINT_SMUDGE_HUNT_COOLDOWN = 'Smudging nearby prevents hunt for a longer ti
 const HINT_SIMULTANEUS_ACTIVITY = 'Two interactions at the same time';
 // Can throw multiple objects at once
 const HINT_THROWS_MULTIPLE_OBJECTS = 'Throws multiple objects at once';
-
+const HINT_GHOST_ORBS = 'Ghost Orbs as fourth evidence';
 
 //TODO look into using an API to get the ghosts from the Wiki?
 
@@ -163,4 +161,9 @@ export const GHOSTS = [
         'name': 'Yurei',
         'evidence': [EVIDENCE.DOTS_PROJECTOR, EVIDENCE.GHOST_ORB, EVIDENCE.FREEZING_TEMPERATURES]
     },
+    {
+        'name': 'The Mimic',
+        'evidence': [EVIDENCE.SPIRIT_BOX, EVIDENCE.FINGERPRINTS, EVIDENCE.FREEZING_TEMPERATURES, EVIDENCE.GHOST_ORB],
+        'hints': [HINT_GHOST_ORBS]
+    }
 ];
