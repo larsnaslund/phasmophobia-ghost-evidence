@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Form } from 'react-bootstrap'
+import { Card, ToggleButton, ButtonGroup } from 'react-bootstrap'
 import { Alert } from 'react-bootstrap';
+import { useGhostHelper } from '../GhostContext';
 
 //TODO REWRITE ONCE FUNCTIONAL
 export default function EvidenceSelector() {
+
+    const { FilterGhostsByEvidence } = useGhostHelper();
 
     const [error, setError] = useState(null);
     const [evidence, setEvidence] = useState([])
     const [isLoaded, setIsLoaded] = useState(false);
 
-
+    //TODO refactor and move to the proper place
     useEffect(() => {
         fetch('api/ghost-evidence')
             .then((res) => res.json())
@@ -28,7 +31,6 @@ export default function EvidenceSelector() {
                 })
     }, []);
 
-
     const onChangeCheckbox = (id) => {
         const checkedEvidence = evidence.find(item => item.id === id);
 
@@ -36,23 +38,34 @@ export default function EvidenceSelector() {
             // If checked state is at the upper limit (2), reset to 0, otherwise increment
             checkedEvidence.state = (checkedEvidence.state === 2) ? 0 : checkedEvidence.state + 1;
             setEvidence([...evidence]);
+            let include = evidence.filter(item => item.state === 1).map(e => e.label);
+            let omit = evidence.filter(item => item.state === 2).map(e => e.label);
+            FilterGhostsByEvidence(include, omit);
         }
     }
 
 
     return (
-        <Card>
-            <Card.Header>Available evidence</Card.Header>
+        <Card className='mb-2'>
+            <Card.Header>Select the evidence found and/or the evidence to omit. It works just like the journal in-game.</Card.Header>
             {error && <Alert variant="danger">{error.message}</Alert>}
-            {isLoaded && evidence.map(
-                (entry) => (
-                    <Form.Check type="checkbox" id={entry.id}>
-                        {/* TODO get the ID dynamically instead of calling with a lambda */}
-                        <Form.Check.Input checked={entry.state === 2 || entry.state === 1} onChange={() => onChangeCheckbox(entry.id)} type="checkbox" />
-                        <Form.Check.Label style={entry.state === 2 ? { textDecorationLine: 'line-through' } : {}}>{entry.label}</Form.Check.Label>
-                    </Form.Check>
-                )
-            )}
-        </Card >
+            <ButtonGroup className='flex-wrap'>
+                {isLoaded && evidence.map(
+                    (entry) => (
+                        <ToggleButton
+                            key={entry.id}
+                            id={`radio-${entry.id}`}
+                            type="checkbox"
+                            checked={entry.state === 2 || entry.state === 1}
+                            onChange={() => onChangeCheckbox(entry.id)}
+                            style={entry.state === 2 ? { background: '#dc3545', textDecorationLine: 'line-through' } : entry.state === 1 ? { background: '#198754' } : {}}
+                            variant="secondary"
+                        >
+                            {entry.label}
+                        </ToggleButton>
+                    )
+                )}
+            </ButtonGroup>
+        </Card>
     )
 }

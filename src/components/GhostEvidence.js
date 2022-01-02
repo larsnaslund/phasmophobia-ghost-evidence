@@ -5,7 +5,7 @@ export default function GhostEvidence(props) {
     return (
         (props.list.length > 0) && <ListGroup variant="flush">
             {props.list.map((evidence) => (
-                <ListGroup.Item>{evidence}</ListGroup.Item>
+                <ListGroup.Item key={evidence.split(' ').join('')}>{evidence}</ListGroup.Item>
             ))}
         </ListGroup>)
 }
