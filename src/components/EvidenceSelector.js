@@ -18,7 +18,8 @@ export default function EvidenceSelector() {
             .then((res) => res.json())
             .then((result) => {
                 let tempEvidence = [];
-                // Checkbox state: 0 = unchecked, 1 = checked, 2 = strike-through
+                // Evidence state. Whether a piece of evidence type is to be used to filter and in which way
+                // 0 = default, 1 = required, 2 = to omit
                 Object.entries(result).map(([key, value]) =>
                     tempEvidence.push({ id: key, label: value, state: 0 })
                 )
@@ -31,7 +32,7 @@ export default function EvidenceSelector() {
                 })
     }, []);
 
-    const onChangeCheckbox = (id) => {
+    const onChangeEvidence = (id) => {
         const checkedEvidence = evidence.find(item => item.id === id);
 
         if (checkedEvidence) {
@@ -54,10 +55,10 @@ export default function EvidenceSelector() {
                     (entry) => (
                         <ToggleButton
                             key={entry.id}
-                            id={`radio-${entry.id}`}
+                            id={entry.id}
                             type="checkbox"
                             checked={entry.state === 2 || entry.state === 1}
-                            onChange={() => onChangeCheckbox(entry.id)}
+                            onChange={() => onChangeEvidence(entry.id)}
                             style={entry.state === 2 ? { background: '#dc3545', textDecorationLine: 'line-through' } : entry.state === 1 ? { background: '#198754' } : {}}
                             variant="secondary"
                         >
