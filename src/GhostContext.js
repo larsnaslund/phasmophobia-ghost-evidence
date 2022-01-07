@@ -10,54 +10,97 @@ export function useGhostHelper() {
 
 export const GhostProvider = props => {
 
+    // Current ghosts that are used in the UI
     const [ghosts, setGhosts] = useState([]);
+    // All the ghosts from the load stage
     const [untouchedGhosts, setUntouchedGhosts] = useState([]);
+
+    // All evidence types. Also includes a state property to know whether it's been found under the session or can be omitted
+    const [evidence, setEvidence] = useState([]);
+    const EVIDENCE_STATE = {
+        default: 0,
+        confirm: 1,
+        omit: 2
+    };
+
+    // Current error and load state
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
 
     const value = {
         ghosts,
-        FilterGhostsByEvidence
+        evidence,
+        UpdateEvidence,
+        GetEvidenceState,
+        StringToKey,
+        EVIDENCE_STATE
     };
 
-    function FilterGhostsByEvidence(include, omit) {
+    // onMount
+    useEffect(() => {
+        simpleJSONFetch('api/ghosts', (result) => {
+            setGhosts(result);
+            setUntouchedGhosts(result)
+        });
+        simpleJSONFetch('api/ghost-evidence', (result) => {
+            // Map evidence into usable format. label = string representation of evidence
+            let e = Object.entries(result).map(
+                ([key, value]) => ({ id: key, label: value, state: 0 })
+            );
+            setEvidence(e);
+        });
+    }, []);
 
-        // If nothing is provided, reset the ghosts
-        if (include.length === 0 && omit.length === 0) {
-            return setGhosts(untouchedGhosts);
-        }
+    // on evidence change
+    useEffect(() => {
+        let confirmed = evidence.filter(e => e.state === EVIDENCE_STATE.confirm);
+        let omitted = evidence.filter(e => e.state === EVIDENCE_STATE.omit);
 
-        const filtered = [];
-        untouchedGhosts.forEach((ghost) => {
-            // Amount of matches that have to be made
-            let matchesLeft = include.length + omit.length;
-            // Loop through each evidence type that the ghost should have. For every match, substract 1 from matchesLeft
-            include.forEach(e => matchesLeft -= ghost.evidence.includes(e));
-            // Similar thing here, but this time make sure the ghost DOES NOT have a certain evidence type
-            omit.forEach(e => matchesLeft -= !ghost.evidence.includes(e));
-            // If everything matched up, then this ghost meets the current given evidence criterias
-            if (matchesLeft === 0) {
-                filtered.push(ghost);
-            }
+        let matches = untouchedGhosts.filter((ghost) => {
+            // Find all the ghosts with a perfect evidence match
+            return (
+                confirmed.filter(e => ghost.evidence.includes(e.label)).length === confirmed.length
+                &&
+                omitted.filter(e => !ghost.evidence.includes(e.label)).length === omitted.length
+            );
         });
 
-        setGhosts(filtered);
+        setGhosts(matches);
+    }, [evidence]);
+
+
+    //0 = default, 1 = required, 2 = to omit
+    function UpdateEvidence(id) {
+        let e = evidence.find(item => item.id === id);
+
+        if (e) {
+            // Update the evidence state in circular fashion. 0 => 1 => 3 => 0 ...
+            e.state = (e.state === EVIDENCE_STATE.omit ? EVIDENCE_STATE.default : e.state + 1);
+            setEvidence([...evidence]);
+        }
     }
 
-    useEffect(() => {
-        fetch('api/ghosts')
+    function StringToKey(string) {
+        return string.split(' ').join('');
+    }
+
+    function GetEvidenceState(evidenceLabel) {
+        const item = evidence.find(item => item.label === evidenceLabel);
+        return (!item) ? EVIDENCE_STATE.default : item.state;
+    }
+
+    const simpleJSONFetch = (endpoint, resultCallback) => {
+        fetch(endpoint)
             .then((res) => res.json())
             .then((result) => {
-                setGhosts(result);
-                setUntouchedGhosts(result);
                 setIsLoaded(true);
+                resultCallback(result);
             },
-                // Handle errors instead of swallowing them in a catch block
                 (error) => {
                     setIsLoaded(false);
                     setError(error);
                 });
-    }, []);
+    }
 
     return (
         <GhostContext.Provider value={value}>

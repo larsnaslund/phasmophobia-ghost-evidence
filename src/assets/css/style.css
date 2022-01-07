@@ -1,53 +1,46 @@
+@import "responsive.css";
+
 @font-face {
   font-family: "Shadows Into Light", cursive;
   src: local("ShadowsIntoLight"),
     url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap");
 }
+
 body {
   background-color: #fff3d1;
 }
+
 .ghost-grid {
   display: grid;
   grid-gap: 20px;
   width: 100%;
   margin: 0 auto;
 }
-.ghost-grid .ghost-name {
-  font-weight: bold;
-  border-bottom: 2px solid #000;
-  font-family: "Shadows Into Light", cursive;
+
+.ghost-grid .card {
+  border: 0;
+  box-shadow: 5px 4px 11px -9px rgba(0, 0, 0, 0.61);
 }
 
 .ghost-grid .card,
 .ghost-grid .card .ghost-evidence-item {
   background-color: #f8df9b;
 }
-.ghost-grid .card {
-  border: 0;
-  box-shadow: 5px 4px 11px -9px rgba(0, 0, 0, 0.61);
+.ghost-grid .card.finalGhost,
+.ghost-grid .card.finalGhost .ghost-evidence-item {
+  background: green;
 }
+
+.ghost-grid .card .ghost-name {
+  font-weight: bold;
+  border-bottom: 2px solid #000;
+  font-family: "Shadows Into Light", cursive;
+}
+
 .ghost-grid .card .ghost-evidence-item {
   font-size: 80%;
 }
-@media screen and (max-width: 600px) {
-  .ghost-grid {
-    grid-template-columns: repeat(1, 1fr);
-  }
-}
 
-@media screen and (min-width: 600px) {
-  .ghost-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media screen and (min-width: 800px) {
-  .ghost-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-@media screen and (min-width: 1400px) {
-  .ghost-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
+.ghost-grid .card .ghost-evidence-item.confirmed span {
+  text-decoration: line-through;
 }
