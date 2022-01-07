@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Shadows Into Light", cursive;
+  src: local("ShadowsIntoLight"),
+    url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap");
+}
+body {
+  background-color: #caa478;
+}
 .ghost-grid {
   display: grid;
   grid-gap: 20px;
@@ -6,8 +14,21 @@
 }
 .ghost-grid .ghost-name {
   font-weight: bold;
+  border-bottom: 2px solid #000;
+  font-family: "Shadows Into Light", cursive;
 }
 
+.ghost-grid .card,
+.ghost-grid .card .ghost-evidence-item {
+  background-color: #fcfbcb;
+}
+.ghost-grid .card {
+  border: 0;
+  box-shadow: 5px 4px 11px -9px rgba(0, 0, 0, 0.61);
+}
+.ghost-grid .card .ghost-evidence-item {
+  font-size: 80%;
+}
 @media screen and (max-width: 600px) {
   .ghost-grid {
     grid-template-columns: repeat(1, 1fr);
